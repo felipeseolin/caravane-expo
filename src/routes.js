@@ -4,11 +4,11 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 // Screens
-import HomeScreen from './screens/HomeScreen/HomeScreen';
-import MyTripsScreen from './screens/MyTripsScreen/MyTripsScreen';
-import ProfileScreen from './screens/ProfileScreen/ProfileScreen';
-import SavedScreen from './screens/SavedScreen/SavedScreen';
-import SearchScreen from './screens/SearchScreen/SearchScreen';
+import HomeScreen from './screens/HomeScreen';
+import MyTripsScreen from './screens/MyTripsScreen';
+import ProfileScreen from './screens/ProfileScreen';
+import SavedScreen from './screens/SavedScreen';
+import SearchScreen from './screens/SearchScreen';
 // Icons
 // import Teste from '../assets/home.svg';
 
