@@ -3,12 +3,15 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-// Screens
+import {Platform} from 'react-native';
+import Constants from 'expo-constants';
+// Screens/
 import HomeScreen from './screens/HomeScreen';
 import MyTripsScreen from './screens/MyTripsScreen';
 import ProfileScreen from './screens/ProfileScreen';
 import SavedScreen from './screens/SavedScreen';
 import SearchScreen from './screens/SearchScreen';
+import LoginScreen from './screens/LoginScreen';
 // Icons
 // import Teste from '../assets/home.svg';
 
@@ -38,7 +41,16 @@ const tabNavigator = createBottomTabNavigator({
     },
   },
   ProfileScreen: {
-    screen: ProfileScreen,
+    screen: createStackNavigator(
+      {
+        ProfileScreen,
+        LoginScreen,
+      }, {
+        defaultNavigationOptions: {
+          header: null,
+        }
+      },
+    ),
     navigationOptions: {
       tabBarLabel: 'Usuário',
     },
