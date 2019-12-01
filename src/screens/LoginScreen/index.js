@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import * as firebase from 'firebase';
 import { connect } from 'react-redux';
 
 import Title from '../../components/Title';
@@ -9,8 +8,6 @@ import Screen from '../../components/Screen';
 import ButtonAndLoader from '../../components/ButtonAndLoader';
 import { processLogin } from '../../actions';
 import messageByErrorCode from '../../util/messageByErrorCode';
-
-import styles from './styles';
 
 class LoginScreen extends React.Component {
   constructor(props) {
@@ -95,8 +92,6 @@ class LoginScreen extends React.Component {
           <ButtonAndLoader
             title="Entrar"
             accessibilityLabel="Fazer login no aplicativo"
-            buttonColor="blue"
-            textColor="white"
             onPress={() => this.processLogin()}
             isLoading={this.state.isLoading}
           />

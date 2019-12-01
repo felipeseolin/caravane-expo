@@ -12,6 +12,7 @@ import ProfileScreen from './screens/ProfileScreen';
 import SavedScreen from './screens/SavedScreen';
 import SearchScreen from './screens/SearchScreen';
 import LoginScreen from './screens/LoginScreen';
+import AppInfoScreen from './screens/AppInfoScreen';
 // Icons
 // import Teste from '../assets/home.svg';
 
@@ -45,6 +46,7 @@ const tabNavigator = createBottomTabNavigator({
       {
         ProfileScreen,
         LoginScreen,
+        AppInfoScreen,
       }, {
         defaultNavigationOptions: {
           header: null,

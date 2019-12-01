@@ -6,7 +6,6 @@ import Title from '../../components/Title';
 import Section from '../../components/Section';
 import Circle from '../../components/Circle';
 import SmallCard from '../../components/SmallCard';
-
 // import styles from './styles.js';
 import general from '../../styles/general.js';
 

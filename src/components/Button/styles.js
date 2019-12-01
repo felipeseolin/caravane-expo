@@ -1,21 +1,23 @@
 import { StyleSheet } from 'react-native';
 
+import fontWeight from '../../styles/fontWeight';
+
 const styles = StyleSheet.create({
   container: {
     marginTop: 8,
     marginBottom: 8,
   },
   button: {
-    marginRight: 40,
-    marginLeft: 40,
     marginTop: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
+    marginBottom: 10,
+    paddingTop: 14,
+    paddingBottom: 14,
     borderRadius: 10,
-    borderWidth: 1,
   },
   buttonText: {
     textAlign: 'center',
+    fontWeight: fontWeight.light,
+    fontSize: 16,
     paddingLeft: 10,
     paddingRight: 10,
   },

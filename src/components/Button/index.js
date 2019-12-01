@@ -3,8 +3,10 @@ import { View, Text, TouchableHighlight } from 'react-native';
 
 import styles from './styles';
 
+import color from '../../styles/color';
+
 const Button = ({
-  title, buttonColor, textColor, accessibilityLabel, onPress,
+  title, buttonColor = color.blue, textColor = color.white, accessibilityLabel, onPress,
 }) => (
   <View style={styles.container}>
     <TouchableHighlight
@@ -13,7 +15,7 @@ const Button = ({
       onPress={() => onPress()}
       style={[styles.button, { backgroundColor: buttonColor }]}
     >
-      <Text style={[styles.buttonText, { color: textColor }]}>{title}</Text>
+      <Text style={[styles.buttonText, { color: textColor, borderColor: textColor }]}>{title}</Text>
     </TouchableHighlight>
   </View>
 );
