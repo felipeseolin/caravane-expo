@@ -18,27 +18,42 @@ import MyCaravanasScreen from './screens/MyCaravanasScreen';
 // Icons
 // import Teste from '../assets/home.svg';
 
+import color from './styles/color';
+
+const defaultNavigationOptions = {
+  title: 'Caravane',
+  hearderTintColor: color.white,
+  headerBackTitle: null,
+  headerTintColor: color.white,
+  headerStyle: {
+    backgroundColor: color.blue,
+    borderBottomWidth: 1,
+    borderBottomColor: color.gray
+  },
+  headerTitleStyle: {
+    color: color.white,
+    fontSize: 16
+  }
+};
+
 const tabNavigator = createBottomTabNavigator({
   HomeScreen: {
-    screen: HomeScreen,
+    screen: createStackNavigator({
+      HomeScreen,
+    }, {defaultNavigationOptions}),
     navigationOptions: {
       tabBarLabel: 'Início'
     }
   },
-  SearchScreen: {
-    screen: SearchScreen,
-    navigationOptions: {
-      tabBarLabel: 'Buscar'
-    }
-  },
-  MyTripsScreen: {
-    screen: MyTripsScreen,
-    navigationOptions: {
-      tabBarLabel: 'Viagens'
-    }
-  },
   SavedScreen: {
-    screen: SavedScreen,
+    screen: createStackNavigator({
+      SavedScreen: {
+        screen: SavedScreen,
+        navigationOptions: {
+          title: 'Caravanas Salvas'
+        }
+      }
+    }, { defaultNavigationOptions }),
     navigationOptions: {
       tabBarLabel: 'Salvos'
     }
@@ -46,21 +61,53 @@ const tabNavigator = createBottomTabNavigator({
   ProfileScreen: {
     screen: createStackNavigator(
       {
-        ProfileScreen,
-        LoginScreen,
-        AppInfoScreen,
-        CaravanaFormScreen,
-        MyCaravanasScreen,
-      }, {
-        defaultNavigationOptions: {
-          header: null
+        ProfileScreen: {
+          screen: ProfileScreen,
+          navigationOptions: {
+            title: 'Meu perfil'
+          }
+        },
+        LoginScreen: {
+          screen: LoginScreen,
+          navigationOptions: {
+            title: 'Entrar'
+          }
+        },
+        AppInfoScreen: {
+          screen: AppInfoScreen,
+          navigationOptions: {
+            title: 'Informações'
+          }
+        },
+        CaravanaFormScreen: {
+          screen: CaravanaFormScreen,
+          navigationOptions: ({ navigation }) => {
+            if (navigation.state.params && navigation.state.params.caravana) {
+              return {
+                title: navigation.state.params.caravana.title
+              };
+            }
+
+            return { title: 'Nova caravana' };
+          }
+        },
+        MyCaravanasScreen: {
+          screen: MyCaravanasScreen,
+          navigationOptions: {
+            title: 'Minhas caravanas'
+          }
         }
-      }
+      }, { defaultNavigationOptions }
     ),
     navigationOptions: {
-      tabBarLabel: 'Usuário'
+      tabBarLabel: 'Usuário',
     }
   }
+}, {
+  tabBarOptions: {
+    activeTintColor: color.blue,
+    inactiveTintColor: color.darkGray,
+  },
 });
 
 const stackNavigator = createStackNavigator(

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import { connect } from 'react-redux';
 
 import { userLogout } from '../../actions';
@@ -8,6 +8,7 @@ import Button from '../../components/Button';
 import Screen from '../../components/Screen';
 import Title from '../../components/Title';
 import color from '../../styles/color';
+import styles from './styles';
 
 class ProfileScreen extends Component {
   renderLoginLogoutButton() {
@@ -39,15 +40,13 @@ class ProfileScreen extends Component {
     const { user, navigation } = this.props;
     return (
       <Screen>
-        <Title>{user && user.displayName ? user.displayName : 'Minha conta '}</Title>
-        <Text>{user ? 'Usuario logado' : 'não logado'}</Text>
-        {this.renderLoginLogoutButton()}
 
-        <Button
-          title="Acessar informações sobre o aplicativo"
-          accessibilityLabel="Acessar informações sobre o aplicativo"
-          onPress={() => this.props.navigation.navigate('AppInfoScreen')}
-        />
+        <View style={styles.userIconContainer}>
+          <Image
+            source={{ uri: 'https://image.flaticon.com/icons/png/512/44/44948.png' }}
+            style={styles.userIcon}
+          />
+        </View>
 
         {
           user == null
@@ -56,6 +55,14 @@ class ProfileScreen extends Component {
               navigation.navigate('MyCaravanasScreen');
             }}/>)
         }
+
+        {this.renderLoginLogoutButton()}
+
+        <Button
+          title="Acessar informações sobre o aplicativo"
+          accessibilityLabel="Acessar informações sobre o aplicativo"
+          onPress={() => this.props.navigation.navigate('AppInfoScreen')}
+        />
       </Screen>
     );
   }
