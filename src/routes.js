@@ -15,6 +15,7 @@ import LoginScreen from './screens/LoginScreen';
 import AppInfoScreen from './screens/AppInfoScreen';
 import CaravanaFormScreen from './screens/CaravanaFormScreen';
 import MyCaravanasScreen from './screens/MyCaravanasScreen';
+import CaravanaDetailsScreen from './screens/CaravanaDetailsScreen';
 // Icons
 import HomeIcon from '../assets/icons/home.svg';
 import UserIcon from '../assets/icons/user.svg';
@@ -30,41 +31,53 @@ const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: color.blue,
     borderBottomWidth: 1,
-    borderBottomColor: color.gray,
+    borderBottomColor: color.gray
   },
   headerTitleStyle: {
     color: color.white,
-    fontSize: 16,
-  },
+    fontSize: 16
+  }
 };
 
 const tabNavigator = createBottomTabNavigator({
   HomeScreen: {
     screen: createStackNavigator({
       HomeScreen,
-    }, {defaultNavigationOptions}),
+      CaravanaDetailsScreen: {
+        screen: CaravanaDetailsScreen,
+        navigationOptions: ({ navigation }) => {
+          if (navigation.state.params && navigation.state.params.caravana) {
+            return {
+              title: navigation.state.params.caravana.title,
+            };
+          }
+
+          return { title: 'Caravana' };
+        },
+      },
+    }, { defaultNavigationOptions }),
     navigationOptions: {
       tabBarLabel: 'Início',
       tabBarIcon: ({ focused }) => (
-        <HomeIcon fill={focused ? color.blue : color.darkGray} height={18} />
-      ),
-    },
+        <HomeIcon fill={focused ? color.blue : color.darkGray} height={18}/>
+      )
+    }
   },
   SavedScreen: {
     screen: createStackNavigator({
       SavedScreen: {
         screen: SavedScreen,
         navigationOptions: {
-          title: 'Caravanas Salvas',
-        },
-      },
+          title: 'Caravanas Salvas'
+        }
+      }
     }, { defaultNavigationOptions }),
     navigationOptions: {
       tabBarLabel: 'Salvos',
       tabBarIcon: ({ focused }) => (
-        <SaveIcon fill={focused ? color.blue : color.darkGray} height={18} />
-      ),
-    },
+        <SaveIcon fill={focused ? color.blue : color.darkGray} height={18}/>
+      )
+    }
   },
   ProfileScreen: {
     screen: createStackNavigator(
@@ -110,31 +123,31 @@ const tabNavigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: 'Usuário',
       tabBarIcon: ({ focused }) => (
-        <UserIcon fill={focused ? color.blue : color.darkGray} height={18} />
-      ),
-    },
-  },
+        <UserIcon fill={focused ? color.blue : color.darkGray} height={18}/>
+      )
+    }
+  }
 }, {
   tabBarOptions: {
     activeTintColor: color.blue,
-    inactiveTintColor: color.darkGray,
-  },
+    inactiveTintColor: color.darkGray
+  }
 });
 
 const stackNavigator = createStackNavigator(
   {
-    HomeScreen,
+    HomeScreen
   },
   {
     defaultNavigationOptions: {
-      header: null,
-    },
-  },
+      header: null
+    }
+  }
 );
 
 const AppNavigator = createSwitchNavigator({
   tabNavigator,
-  stackNavigator,
+  stackNavigator
 });
 
 export default Routes = createAppContainer(AppNavigator);

@@ -12,7 +12,7 @@ export const watchCaravanas = () => {
   return (dispatch) => {
     firebase
       .database()
-      .ref(`/users/${currentUser.uid}/caravanas`)
+      .ref('/caravanas')
       .on('value', (snapshot) => {
         const caravanas = snapshot.val();
         const action = setMyCaravanas(caravanas);

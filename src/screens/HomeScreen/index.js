@@ -24,7 +24,7 @@ class HomeScreen extends Component {
     return (
       <Screen>
 
-        <Section title="Categorias" description="Escolha através da categoria que você mais se encaixa">
+        <Section description="As melhores caravanas você encontra aqui!">
           <FlatList
             data={allCaravanas}
             renderItem={({ item }) =>
@@ -32,22 +32,16 @@ class HomeScreen extends Component {
                 <CaravanaItem
                   caravana={item}
                   onPress={() => {
-                    navigation.navigate('ProfileScreen', { caravana: item });
+                    navigation.navigate('CaravanaDetailsScreen', { caravana: item });
                   }}
                 />
               )}
             keyExtractor={(item) => item.id}
+            onEndReached={}
+            onEndReachedThreshold={0}
           />
         </Section>
 
-        <Section title="As mais procuradas" description="As caravanas mais procuradas">
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <SmallCard title="Teste" description="descricao" image=""/>
-            <SmallCard title="Teste" description="descricao" image=""/>
-            <SmallCard title="Teste" description="descricao" image=""/>
-            <SmallCard title="Teste" description="descricao" image=""/>
-          </ScrollView>
-        </Section>
       </Screen>
     );
   }

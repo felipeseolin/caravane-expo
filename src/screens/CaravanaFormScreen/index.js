@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Alert } from 'react-native';
+import { View, Alert, KeyboardAvoidingView } from 'react-native';
 import { connect } from 'react-redux';
 
 import { resetForm, setField, saveCaravana, setAllFields, deleteMyCaravana } from '../../actions';
@@ -66,65 +66,71 @@ class CaravanaFormScreen extends React.Component {
     const { caravanaForm, setField, saveCaravana, navigation } = this.props;
     return (
       <Screen>
-        <Title>Nova caravana</Title>
-        <View>
-          <Input
-            label="Título"
-            placeholder="São José do Rio Preto + Aparecida do Norte"
-            value={caravanaForm.title}
-            onChangeText={(value) => setField('title', value)}
+        <KeyboardAvoidingView
+          style={{ flex: 1, justifyContent: 'center', width: '100%' }}
+          behavior='padding'
+          enabled
+        >
+          <Title>Nova caravana</Title>
+          <View>
+            <Input
+              label="Título"
+              placeholder="São José do Rio Preto + Aparecida do Norte"
+              value={caravanaForm.title}
+              onChangeText={(value) => setField('title', value)}
+            />
+            <Input
+              label="Descrição"
+              placeholder="Caravana muito legal e barata!"
+              value={caravanaForm.description}
+              onChangeText={(value) => setField('description', value)}
+              multiline
+              numberOfLines={8}
+            />
+            <Input
+              label="Lugar de saida"
+              placeholder="Cornélio Procópio-PR"
+              value={caravanaForm.fromPlace}
+              onChangeText={(value) => setField('fromPlace', value)}
+            />
+            <Input
+              label="Lugar de destino"
+              placeholder="Aparecida do Norte-SP"
+              value={caravanaForm.toPlace}
+              onChangeText={(value) => setField('toPlace', value)}
+            />
+            <Input
+              label="Data de saida"
+              placeholder="21/10/2020"
+              value={caravanaForm.exitDate}
+              onChangeText={(value) => setField('exitDate', value)}
+            />
+            <Input
+              label="Data de chegada"
+              placeholder="30/10/2020"
+              value={caravanaForm.arriveDate}
+              onChangeText={(value) => setField('arriveDate', value)}
+            />
+          </View>
+          <ButtonAndLoader
+            title="Salvar"
+            accessibilityLabel="Salvar a caravana"
+            isLoading={isLoading}
+            onPress={async () => {
+              this.setState({ isLoading: true });
+              try {
+                await saveCaravana(caravanaForm);
+                navigation.goBack();
+              } catch (e) {
+                Alert.alert('Erro ao salvar', e.message);
+              } finally {
+                this.setState({ isLoading: false });
+              }
+            }}
           />
-          <Input
-            label="Descrição"
-            placeholder="Caravana muito legal e barata!"
-            value={caravanaForm.description}
-            onChangeText={(value) => setField('description', value)}
-            multiline
-            numberOfLines={8}
-          />
-          <Input
-            label="Lugar de saida"
-            placeholder="Cornélio Procópio-PR"
-            value={caravanaForm.fromPlace}
-            onChangeText={(value) => setField('fromPlace', value)}
-          />
-          <Input
-            label="Lugar de destino"
-            placeholder="Aparecida do Norte-SP"
-            value={caravanaForm.toPlace}
-            onChangeText={(value) => setField('toPlace', value)}
-          />
-          <Input
-            label="Data de saida"
-            placeholder="21/10/2020"
-            value={caravanaForm.exitDate}
-            onChangeText={(value) => setField('exitDate', value)}
-          />
-          <Input
-            label="Data de chegada"
-            placeholder="30/10/2020"
-            value={caravanaForm.arriveDate}
-            onChangeText={(value) => setField('arriveDate', value)}
-          />
-        </View>
-        <ButtonAndLoader
-          title="Salvar"
-          accessibilityLabel="Salvar a caravana"
-          isLoading={isLoading}
-          onPress={async () => {
-            this.setState({ isLoading: true });
-            try {
-              await saveCaravana(caravanaForm);
-              navigation.goBack();
-            } catch (e) {
-              Alert.alert('Erro ao salvar', e.message);
-            } finally {
-              this.setState({ isLoading: false });
-            }
-          }}
-        />
 
-        {this.renderDeleteButton()}
+          {this.renderDeleteButton()}
+        </KeyboardAvoidingView>
       </Screen>
     );
   }
