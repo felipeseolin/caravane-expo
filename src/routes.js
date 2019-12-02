@@ -3,7 +3,7 @@ import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 // Screens/
 import HomeScreen from './screens/HomeScreen';
@@ -13,6 +13,8 @@ import SavedScreen from './screens/SavedScreen';
 import SearchScreen from './screens/SearchScreen';
 import LoginScreen from './screens/LoginScreen';
 import AppInfoScreen from './screens/AppInfoScreen';
+import CaravanaFormScreen from './screens/CaravanaFormScreen';
+import MyCaravanasScreen from './screens/MyCaravanasScreen';
 // Icons
 // import Teste from '../assets/home.svg';
 
@@ -20,26 +22,26 @@ const tabNavigator = createBottomTabNavigator({
   HomeScreen: {
     screen: HomeScreen,
     navigationOptions: {
-      tabBarLabel: 'Início',
-    },
+      tabBarLabel: 'Início'
+    }
   },
   SearchScreen: {
     screen: SearchScreen,
     navigationOptions: {
-      tabBarLabel: 'Buscar',
-    },
+      tabBarLabel: 'Buscar'
+    }
   },
   MyTripsScreen: {
     screen: MyTripsScreen,
     navigationOptions: {
-      tabBarLabel: 'Viagens',
-    },
+      tabBarLabel: 'Viagens'
+    }
   },
   SavedScreen: {
     screen: SavedScreen,
     navigationOptions: {
-      tabBarLabel: 'Salvos',
-    },
+      tabBarLabel: 'Salvos'
+    }
   },
   ProfileScreen: {
     screen: createStackNavigator(
@@ -47,32 +49,34 @@ const tabNavigator = createBottomTabNavigator({
         ProfileScreen,
         LoginScreen,
         AppInfoScreen,
+        CaravanaFormScreen,
+        MyCaravanasScreen,
       }, {
         defaultNavigationOptions: {
-          header: null,
+          header: null
         }
-      },
+      }
     ),
     navigationOptions: {
-      tabBarLabel: 'Usuário',
-    },
-  },
+      tabBarLabel: 'Usuário'
+    }
+  }
 });
 
 const stackNavigator = createStackNavigator(
   {
-    HomeScreen,
+    HomeScreen
   },
   {
     defaultNavigationOptions: {
-      header: null,
-    },
-  },
+      header: null
+    }
+  }
 );
 
 const AppNavigator = createSwitchNavigator({
   tabNavigator,
-  stackNavigator,
+  stackNavigator
 });
 
 export default Routes = createAppContainer(AppNavigator);

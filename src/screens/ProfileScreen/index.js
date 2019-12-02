@@ -10,7 +10,6 @@ import Title from '../../components/Title';
 import color from '../../styles/color';
 
 class ProfileScreen extends Component {
-
   renderLoginLogoutButton() {
     const { user } = this.props;
     if (user === null) {
@@ -37,18 +36,26 @@ class ProfileScreen extends Component {
   }
 
   render() {
-    const { user } = this.props;
+    const { user, navigation } = this.props;
     return (
       <Screen>
         <Title>{user && user.displayName ? user.displayName : 'Minha conta '}</Title>
         <Text>{user ? 'Usuario logado' : 'não logado'}</Text>
-        { this.renderLoginLogoutButton() }
+        {this.renderLoginLogoutButton()}
 
         <Button
           title="Acessar informações sobre o aplicativo"
           accessibilityLabel="Acessar informações sobre o aplicativo"
           onPress={() => this.props.navigation.navigate('AppInfoScreen')}
         />
+
+        {
+          user == null
+            ? (<View/>) :
+            (<Button title="Minhas caravanas" accessibilityLabel="Minhas caravanas" onPress={() => {
+              navigation.navigate('MyCaravanasScreen');
+            }}/>)
+        }
       </Screen>
     );
   }

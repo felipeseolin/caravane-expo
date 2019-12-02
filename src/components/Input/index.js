@@ -11,6 +11,9 @@ const Input = ({
   keyboardType = 'default',
   autoCapitalize = 'sentences',
   secureTextEntry = false,
+  placeholder = '',
+  numberOfLines = 1,
+  multiline = false,
 }) => (
   <View style={styles.container}>
     <Text style={styles.label}>{label}</Text>
@@ -21,7 +24,10 @@ const Input = ({
       autoCapitalize={autoCapitalize}
       secureTextEntry={secureTextEntry}
       onChangeText={onChangeText}
+      placeholder={placeholder}
       value={value}
+      numberOfLines={numberOfLines}
+      multiline={multiline}
     />
   </View>
 );
