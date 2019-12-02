@@ -1,39 +1,70 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, ActivityIndicator, FlatList } from 'react-native';
+import { connect } from 'react-redux';
 
+import { watchAllCaravanas } from '../../actions';
 import Title from '../../components/Title';
 import Section from '../../components/Section';
-import Circle from '../../components/Circle';
 import SmallCard from '../../components/SmallCard';
-// import styles from './styles.js';
-import general from '../../styles/general.js';
+import Screen from '../../components/Screen';
+import CaravanaItem from '../../components/CaravanaItem';
 
-export default class HomeScreen extends Component {
+class HomeScreen extends Component {
+  componentWillMount() {
+    this.props.watchAllCaravanas();
+  }
+
   render() {
-    return (
-      <View style={general.container}>
+    const { allCaravanas, navigation } = this.props;
+    if (allCaravanas == null) {
+      return <ActivityIndicator/>;
+    }
 
-        <Title>Caravane</Title>
-        <Text>Encontre a caravana perfeita para você!</Text>
+    return (
+      <Screen>
 
         <Section title="Categorias" description="Escolha através da categoria que você mais se encaixa">
-          <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <Circle text="Praia" />
-            <Circle text="Praia" />
-            <Circle text="Praia" />
-          </ScrollView>
+          <FlatList
+            data={allCaravanas}
+            renderItem={({ item }) =>
+              (
+                <CaravanaItem
+                  caravana={item}
+                  onPress={() => {
+                    navigation.navigate('ProfileScreen', { caravana: item });
+                  }}
+                />
+              )}
+            keyExtractor={(item) => item.id}
+          />
         </Section>
 
         <Section title="As mais procuradas" description="As caravanas mais procuradas">
           <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <SmallCard title="Teste" description="descricao" image="" />
-            <SmallCard title="Teste" description="descricao" image="" />
-            <SmallCard title="Teste" description="descricao" image="" />
-            <SmallCard title="Teste" description="descricao" image="" />
+            <SmallCard title="Teste" description="descricao" image=""/>
+            <SmallCard title="Teste" description="descricao" image=""/>
+            <SmallCard title="Teste" description="descricao" image=""/>
+            <SmallCard title="Teste" description="descricao" image=""/>
           </ScrollView>
         </Section>
-      </View>
+      </Screen>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  const { listAllCaravanas } = state;
+
+  if (listAllCaravanas === null) {
+    return { allCaravanas: listAllCaravanas };
+  }
+
+  const keys = Object.keys(listAllCaravanas);
+  const listAllCaravanasWithId = keys.map((key) => {
+    return { ...listAllCaravanas[key], id: key };
+  });
+
+  return { allCaravanas: listAllCaravanasWithId };
+};
+export default connect(mapStateToProps, { watchAllCaravanas })(HomeScreen);
