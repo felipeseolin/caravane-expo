@@ -6,13 +6,15 @@ export const setAllCaravanas = (caravanas) => ({
   caravanas,
 });
 
-export const watchAllCaravanas = () => {
+export const watchAllCaravanas = (totalByLoad = 3) => {
   const { currentUser } = firebase.auth();
 
   return (dispatch) => {
     firebase
       .database()
       .ref('/caravanas')
+      .orderByKey()
+      .limitToFirst(totalByLoad)
       .on('value', (snapshot) => {
         const caravanas = snapshot.val();
         const action = setAllCaravanas(caravanas);

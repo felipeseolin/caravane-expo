@@ -1,19 +1,37 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
-import { View, Text, ScrollView, ActivityIndicator, FlatList } from 'react-native';
+import { View, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
 import { watchAllCaravanas } from '../../actions';
-import Title from '../../components/Title';
 import Section from '../../components/Section';
-import SmallCard from '../../components/SmallCard';
-import Screen from '../../components/Screen';
 import CaravanaItem from '../../components/CaravanaItem';
 
 class HomeScreen extends Component {
-  componentWillMount() {
-    this.props.watchAllCaravanas();
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      totalByLoad: 10,
+      total: 10
+    };
   }
+
+  componentWillMount() {
+    this.load();
+  }
+
+  load() {
+    this.setState({ isLoading: true });
+    this.props.watchAllCaravanas(this.state.total);
+    this.setState({ isLoading: false });
+  }
+
+  loadMore = () => {
+    const { totalByLoad, total } = this.state;
+    const newTotal = total + totalByLoad;
+    this.setState({ total: newTotal });
+    this.props.watchAllCaravanas(newTotal);
+  };
 
   render() {
     const { allCaravanas, navigation } = this.props;
@@ -22,11 +40,13 @@ class HomeScreen extends Component {
     }
 
     return (
-      <Screen>
+      <View style={styles.container}>
 
         <Section description="As melhores caravanas você encontra aqui!">
           <FlatList
+            style={styles.list}
             data={allCaravanas}
+            showsVerticalScrollIndicator={false}
             renderItem={({ item }) =>
               (
                 <CaravanaItem
@@ -37,15 +57,25 @@ class HomeScreen extends Component {
                 />
               )}
             keyExtractor={(item) => item.id}
-            onEndReached={}
+            onEndReached={this.loadMore}
             onEndReachedThreshold={0}
           />
         </Section>
 
-      </Screen>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 50
+  }
+});
+
 
 const mapStateToProps = (state) => {
   const { listAllCaravanas } = state;
