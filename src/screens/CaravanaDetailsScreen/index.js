@@ -5,6 +5,7 @@ import Screen from '../../components/Screen';
 import Info from '../../components/Info';
 import Title from '../../components/Title';
 import LongText from '../../components/LongText';
+import Button from '../../components/Button';
 import styles from '../../components/Info/styles';
 
 const CaravanaDetailsScreen = ({ navigation }) => {
@@ -30,6 +31,11 @@ const CaravanaDetailsScreen = ({ navigation }) => {
       <Info title="Data de saida">
         {caravana.arriveDate}
       </Info>
+      <Button
+        title="Garantir minha vaga"
+        accessibilityLabel="Garantir minha vaga nesta caravana"
+        onPress={() => navigation.navigate('CaravanaTripFormScreen', { caravana })}
+      />
     </Screen>
   );
 };

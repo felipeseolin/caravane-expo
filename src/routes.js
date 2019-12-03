@@ -16,6 +16,7 @@ import AppInfoScreen from './screens/AppInfoScreen';
 import CaravanaFormScreen from './screens/CaravanaFormScreen';
 import MyCaravanasScreen from './screens/MyCaravanasScreen';
 import CaravanaDetailsScreen from './screens/CaravanaDetailsScreen';
+import CaravanaTripFormScreen from './screens/CaravanaTripFormScreen';
 // Icons
 import HomeIcon from '../assets/icons/home.svg';
 import UserIcon from '../assets/icons/user.svg';
@@ -31,12 +32,12 @@ const defaultNavigationOptions = {
   headerStyle: {
     backgroundColor: color.blue,
     borderBottomWidth: 1,
-    borderBottomColor: color.gray
+    borderBottomColor: color.gray,
   },
   headerTitleStyle: {
     color: color.white,
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 };
 
 const tabNavigator = createBottomTabNavigator({
@@ -45,6 +46,18 @@ const tabNavigator = createBottomTabNavigator({
       HomeScreen,
       CaravanaDetailsScreen: {
         screen: CaravanaDetailsScreen,
+        navigationOptions: ({ navigation }) => {
+          if (navigation.state.params && navigation.state.params.caravana) {
+            return {
+              title: navigation.state.params.caravana.title,
+            };
+          }
+
+          return { title: 'Caravana' };
+        },
+      },
+      CaravanaTripFormScreen: {
+        screen: CaravanaTripFormScreen,
         navigationOptions: ({ navigation }) => {
           if (navigation.state.params && navigation.state.params.caravana) {
             return {
