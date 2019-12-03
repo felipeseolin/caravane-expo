@@ -64,15 +64,37 @@ const mapStateToProps = (state) => {
   const { currentUser } = firebase.auth();
 
   if (listMyCaravanas === null) {
-    return { myCaravanas: listMyCaravanas, user };
+    return {
+      myCaravanas: listMyCaravanas,
+      user
+    };
   }
 
   const keys = Object.keys(listMyCaravanas);
   const listMyCaravanasWithId = keys.map((key) => {
-    return { ...listMyCaravanas[key], id: key };
+    let passengersWithId = [];
+    if (listMyCaravanas[key].passengers) {
+      const { passengers } = listMyCaravanas[key];
+      const keysPassengers = Object.keys(passengers);
+      passengersWithId = keysPassengers.map((keyPassenger) => {
+        return {
+          ...passengers[keyPassenger],
+          id: keyPassenger
+        };
+      });
+    }
+
+    return {
+      ...listMyCaravanas[key],
+      id: key,
+      passengers: passengersWithId
+    };
   });
 
-  return { myCaravanas: listMyCaravanasWithId, user };
+  return {
+    myCaravanas: listMyCaravanasWithId,
+    user
+  };
 };
 
 export default connect(mapStateToProps, { watchCaravanas })(MyCaravanasScreen);

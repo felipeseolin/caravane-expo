@@ -19,6 +19,7 @@ import MyCaravanasScreen from './screens/MyCaravanasScreen';
 import CaravanaDetailsScreen from './screens/CaravanaDetailsScreen';
 import CaravanaTripFormScreen from './screens/CaravanaTripFormScreen';
 import TripDetailsScreen from './screens/TripDetailsScreen';
+import PassengersScreen from './screens/PassengersScreen';
 // Icons
 import HomeIcon from '../assets/icons/home.svg';
 import UserIcon from '../assets/icons/user.svg';
@@ -154,9 +155,21 @@ const tabNavigator = createBottomTabNavigator({
         MyCaravanasScreen: {
           screen: MyCaravanasScreen,
           navigationOptions: {
-            title: 'Minhas caravanas'
-          }
-        }
+            title: 'Minhas caravanas',
+          },
+        },
+        PassengersScreen: {
+          screen: PassengersScreen,
+          navigationOptions: ({ navigation }) => {
+            if (navigation.state.params && navigation.state.params.caravana) {
+              return {
+                title: navigation.state.params.caravana.title
+              };
+            }
+
+            return { title: 'Caravana' };
+          },
+        },
       }, { defaultNavigationOptions }
     ),
     navigationOptions: {

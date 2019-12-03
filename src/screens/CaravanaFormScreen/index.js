@@ -7,6 +7,7 @@ import { resetForm, setField, saveCaravana, setAllFields, deleteMyCaravana } fro
 import Screen from '../../components/Screen';
 import Title from '../../components/Title';
 import Input from '../../components/Input';
+import Button from '../../components/Button';
 import ButtonAndLoader from '../../components/ButtonAndLoader';
 
 import color from '../../styles/color';
@@ -57,6 +58,27 @@ class CaravanaFormScreen extends React.Component {
             navigation.goBack();
           }
         }}
+      />
+    );
+
+  }
+
+  renderPassengersButton() {
+    const { isEdit } = this.state;
+    // It's a insert
+    if (!isEdit) {
+      return <View/>;
+    }
+
+    const { navigation } = this.props;
+    const { caravana } = navigation.state.params;
+    console.log(caravana.passengers);
+    return (
+      <Button
+        title="Visualizar passageiros"
+        buttonColor={color.yellow}
+        accessibilityLabel="Visualizar passageiros"
+        onPress={() => navigation.navigate('PassengersScreen', { caravana, passengers: caravana.passengers })}
       />
     );
 
@@ -135,7 +157,7 @@ class CaravanaFormScreen extends React.Component {
               }
             }}
           />
-
+          { this.renderPassengersButton() }
           {this.renderDeleteButton()}
         </KeyboardAvoidingView>
       </Screen>
