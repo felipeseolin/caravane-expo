@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   text: {
-    fontSize: 10,
+    fontSize: 12,
     color: color.dark,
   },
 });

@@ -21,11 +21,11 @@ class CaravanaTripFormScreen extends React.Component {
   }
 
   componentDidMount() {
-    const { navigation, setAllFields, resetFormTrip } = this.props;
+    const { navigation, setAllFieldsTrip, resetFormTrip } = this.props;
     const { params } = navigation.state;
 
-    if (params && params.trip) {
-      setAllFields(params.trip);
+    if (params && params.passenger) {
+      setAllFieldsTrip(params.passenger);
       this.setState({ isEdit: true });
     } else {
       resetFormTrip();
@@ -33,27 +33,27 @@ class CaravanaTripFormScreen extends React.Component {
   }
 
   renderDeleteButton() {
-    const { isEdit } = this.state;
+    const { isEdit, isLoading } = this.state;
     // It's a insert
     if (!isEdit) {
       return <View/>;
     }
 
     const { deleteTrip, navigation } = this.props;
-    const { trip } = navigation.state.params;
+    const { passenger, caravana } = navigation.state.params;
 
     return (
       <ButtonAndLoader
-        title="Excluir viagem"
-        isLoading={false}
+        title="Excluir esta vaga"
+        isLoading={isLoading}
         buttonColor={color.red}
-        accessibilityLabel="Excluir esta viagem"
+        accessibilityLabel="Excluir esta vaga"
         onPress={async () => {
           this.setState({ isLoading: true });
-          const hasDeleted = await deleteTrip(trip);
+          const hasDeleted = await deleteTrip(passenger, caravana);
           this.setState({ isLoading: false });
           if (hasDeleted) {
-            navigation.goBack();
+            navigation.navigate('MyTripsScreen');
           }
         }}
       />

@@ -9,40 +9,30 @@ import Screen from '../../components/Screen';
 import TripItem from '../../components/TripItem';
 
 const TripDetailsScreen = ({ navigation }) => {
-  const { caravana } = navigation.state.params;
+  const { caravana, user } = navigation.state.params;
 
   return (
     <Screen>
-      <Title>{caravana.title}</Title>
-
-      <Text style={styles.title}>Descrição</Text>
-      <LongText>
-        {caravana.description}
-      </LongText>
-
-      <Info title="De">
-        {caravana.fromPlace}
-      </Info>
-      <Info title="Para">
-        {caravana.toPlace}
-      </Info>
-      <Info title="Data de partida">
-        {caravana.exitDate}
-      </Info>
-      <Info title="Data de saida">
-        {caravana.arriveDate}
-      </Info>
-
       <Title>Viagens garantidas</Title>
 
       {
-        caravana.passengers.map(passenger => (<TripItem key={passenger.id} passenger={passenger} onPress={() => navigation.navigate('CaravanaTripFormScreen', { caravana })} />))
+        caravana.passengers.map(passenger => (
+          passenger.userId === user.uid ?
+            (<TripItem
+              key={passenger.id}
+              passenger={passenger}
+              onPress={() => navigation.navigate('CaravanaTripFormScreen', {
+                passenger,
+                caravana
+              })}/>)
+            : null
+        ))
       }
 
       <Button
-        title="Garantir minha vaga"
-        accessibilityLabel="Garantir minha vaga nesta caravana"
-        onPress={() => navigation.navigate('CaravanaTripFormScreen', { caravana })}
+        title="Detalhes da caravana"
+        accessibilityLabel="Detalhes da caravana"
+        onPress={() => navigation.navigate('CaravanaDetailsScreen', { caravana })}
       />
     </Screen>
   );

@@ -22,11 +22,12 @@ export const saveTrip = (trip, caravana) => {
   const { currentUser } = firebase.auth();
 
   return async (dispatch) => {
-    if (trip.id) {
+    if (trip.id && caravana.id) {
+      console.log('estou tentando atualizar', trip);
       // Update
       await firebase
         .database()
-        .ref(`/caravanas/${caravana.id}/passengers`)
+        .ref(`/caravanas/${caravana.id}/passengers/${trip.id}`)
         .set(trip);
     } else {
       // Insert
@@ -49,7 +50,7 @@ export const setAllFieldsTrip = (trip) => ({
 export const deleteTrip = (trip, caravana) => (dispatch) => new Promise((resolve, reject) => {
   Alert.alert(
     'Excluir',
-    `Deseja realmente excluir a caravana: ${caravana.title}?`,
+    `Deseja realmente excluir a vaga para: ${trip.passenger}?`,
     [
       {
         text: 'Não',
@@ -64,7 +65,7 @@ export const deleteTrip = (trip, caravana) => (dispatch) => new Promise((resolve
           try {
             await firebase
               .database()
-              .ref(`/caravanas/${caravana.id}`)
+              .ref(`/caravanas/${caravana.id}/passengers/${trip.id}`)
               .remove();
             resolve(true);
           } catch (e) {

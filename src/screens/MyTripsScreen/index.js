@@ -10,12 +10,13 @@ import Screen from '../../components/Screen';
 import Button from '../../components/Button';
 
 class MyTripsScreen extends React.Component {
+
   componentWillMount() {
     this.props.watchTrips();
   }
 
   render() {
-    const { myCaravanas, navigation } = this.props;
+    const { myCaravanas, navigation, user } = this.props;
     if (myCaravanas == null) {
       return (
         <View>
@@ -30,8 +31,11 @@ class MyTripsScreen extends React.Component {
         <FlatList
           data={myCaravanas}
           renderItem={({ item }) => <CaravanaItem caravana={item} onPress={() => {
-            navigation.navigate('TripDetailsScreen', { caravana: item });
-          }} />}
+            navigation.navigate('TripDetailsScreen', {
+              caravana: item,
+              user: user.user,
+            });
+          }}/>}
           keyExtractor={(item) => item.id}
         />
       </Screen>
@@ -40,7 +44,7 @@ class MyTripsScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { listMyTrips } = state;
+  const { listMyTrips, user } = state;
   const { currentUser } = firebase.auth();
 
   if (listMyTrips === null) {
@@ -57,7 +61,7 @@ const mapStateToProps = (state) => {
       passengersWithId = keysPassengers.map((keyPassenger) => {
         return {
           ...passengers[keyPassenger],
-          id: key
+          id: keyPassenger
         };
       });
     }
@@ -83,7 +87,10 @@ const mapStateToProps = (state) => {
     }
   });
 
-  return { myCaravanas: filter };
+  return {
+    myCaravanas: filter,
+    user,
+  };
 };
 
 export default connect(mapStateToProps, { watchTrips })(MyTripsScreen);
