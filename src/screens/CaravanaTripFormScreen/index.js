@@ -82,19 +82,19 @@ class CaravanaTripFormScreen extends React.Component {
               label="Nome completo do passageiro(a)"
               placeholder="John Doe"
               value={tripForm.passenger}
-              onChangeText={(value) => setField('passenger', value)}
+              onChangeText={(value) => setFieldTrip('passenger', value)}
             />
             <Input
               label="CPF"
               placeholder="xxx.xxx.xxx-xx"
               value={tripForm.cpf}
-              onChangeText={(value) => setField('cpf', value)}
+              onChangeText={(value) => setFieldTrip('cpf', value)}
             />
             <Input
               label="Data de nascimento"
               placeholder="01/01/2000"
               value={tripForm.birth}
-              onChangeText={(value) => setField('birth', value)}
+              onChangeText={(value) => setFieldTrip('birth', value)}
             />
           </View>
           <ButtonAndLoader

@@ -3,3 +3,4 @@ export * from './caravanaFormActions';
 export * from './myCaravanasActions';
 export * from './allCaravanasActions';
 export * from './caravanaTripFormActions';
+export * from './tripsActions';

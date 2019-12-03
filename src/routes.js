@@ -5,6 +5,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
+import { MaterialIcons } from  '@expo/vector-icons';
 // Screens/
 import HomeScreen from './screens/HomeScreen';
 import MyTripsScreen from './screens/MyTripsScreen';
@@ -17,6 +18,7 @@ import CaravanaFormScreen from './screens/CaravanaFormScreen';
 import MyCaravanasScreen from './screens/MyCaravanasScreen';
 import CaravanaDetailsScreen from './screens/CaravanaDetailsScreen';
 import CaravanaTripFormScreen from './screens/CaravanaTripFormScreen';
+import TripDetailsScreen from './screens/TripDetailsScreen';
 // Icons
 import HomeIcon from '../assets/icons/home.svg';
 import UserIcon from '../assets/icons/user.svg';
@@ -72,9 +74,9 @@ const tabNavigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: 'Início',
       tabBarIcon: ({ focused }) => (
-        <HomeIcon fill={focused ? color.blue : color.darkGray} height={18}/>
-      )
-    }
+        <HomeIcon fill={focused ? color.blue : color.darkGray} height={18} />
+      ),
+    },
   },
   SavedScreen: {
     screen: createStackNavigator({
@@ -88,9 +90,49 @@ const tabNavigator = createBottomTabNavigator({
     navigationOptions: {
       tabBarLabel: 'Salvos',
       tabBarIcon: ({ focused }) => (
-        <SaveIcon fill={focused ? color.blue : color.darkGray} height={18}/>
-      )
-    }
+        <SaveIcon fill={focused ? color.blue : color.darkGray} height={18} />
+      ),
+    },
+  },
+  MyTripsScreen: {
+    screen: createStackNavigator({
+      MyTripsScreen: {
+        screen: MyTripsScreen,
+        navigationOptions: {
+          title: 'Minhas viagens',
+        },
+      },
+      TripDetailsScreen: {
+        screen: TripDetailsScreen,
+        navigationOptions: ({ navigation }) => {
+          if (navigation.state.params && navigation.state.params.caravana) {
+            return {
+              title: navigation.state.params.caravana.title,
+            };
+          }
+
+          return { title: 'Caravana' };
+        },
+      },
+      CaravanaTripFormScreen: {
+        screen: CaravanaTripFormScreen,
+        navigationOptions: ({ navigation }) => {
+          if (navigation.state.params && navigation.state.params.caravana) {
+            return {
+              title: navigation.state.params.caravana.title,
+            };
+          }
+
+          return { title: 'Caravana' };
+        },
+      },
+    }, { defaultNavigationOptions }),
+    navigationOptions: {
+      tabBarLabel: 'Viagens',
+      tabBarIcon: ({ focused }) => (
+        <MaterialIcons name="directions-bus" size={24} color={focused ? color.blue : color.darkGray} />
+      ),
+    },
   },
   ProfileScreen: {
     screen: createStackNavigator(
@@ -137,9 +179,9 @@ const tabNavigator = createBottomTabNavigator({
       tabBarLabel: 'Usuário',
       tabBarIcon: ({ focused }) => (
         <UserIcon fill={focused ? color.blue : color.darkGray} height={18}/>
-      )
-    }
-  }
+      ),
+    },
+  },
 }, {
   tabBarOptions: {
     activeTintColor: color.blue,
