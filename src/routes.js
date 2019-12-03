@@ -78,22 +78,6 @@ const tabNavigator = createBottomTabNavigator({
       ),
     },
   },
-  SavedScreen: {
-    screen: createStackNavigator({
-      SavedScreen: {
-        screen: SavedScreen,
-        navigationOptions: {
-          title: 'Caravanas Salvas'
-        }
-      }
-    }, { defaultNavigationOptions }),
-    navigationOptions: {
-      tabBarLabel: 'Salvos',
-      tabBarIcon: ({ focused }) => (
-        <SaveIcon fill={focused ? color.blue : color.darkGray} height={18} />
-      ),
-    },
-  },
   MyTripsScreen: {
     screen: createStackNavigator({
       MyTripsScreen: {
