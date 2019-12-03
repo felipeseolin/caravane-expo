@@ -27,7 +27,7 @@ class MyCaravanasScreen extends React.Component {
   }
 
   render() {
-    const { myCaravanas, navigation } = this.props;
+    const { myCaravanas, navigation, user } = this.props;
 
     if (!user) {
       return <NeedLogin navigation={navigation}/>;
