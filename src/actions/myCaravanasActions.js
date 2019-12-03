@@ -13,6 +13,8 @@ export const watchCaravanas = () => {
     firebase
       .database()
       .ref('/caravanas')
+      .orderByChild('userId')
+      .equalTo(currentUser.uid)
       .on('value', (snapshot) => {
         const caravanas = snapshot.val();
         const action = setMyCaravanas(caravanas);

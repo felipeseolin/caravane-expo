@@ -65,10 +65,7 @@ const mapStateToProps = (state) => {
     return { ...listMyCaravanas[key], id: key };
   });
 
-  const filteredMyCaravanas = listMyCaravanasWithId.filter(
-    (caravana) => caravana.userId === currentUser.uid);
-
-  return { myCaravanas: filteredMyCaravanas };
+  return { myCaravanas: listMyCaravanasWithId };
 };
 
 export default connect(mapStateToProps, { watchCaravanas })(MyCaravanasScreen);
