@@ -8,6 +8,7 @@ import Title from '../../components/Title';
 import CaravanaItem from '../../components/CaravanaItem';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
+import NeedLogin from '../../components/NeedLoginScreen';
 
 class MyTripsScreen extends React.Component {
 
@@ -17,6 +18,11 @@ class MyTripsScreen extends React.Component {
 
   render() {
     const { myCaravanas, navigation, user } = this.props;
+
+    if (!user) {
+      return <NeedLogin navigation={navigation} />
+    }
+
     if (myCaravanas == null) {
       return (
         <View>

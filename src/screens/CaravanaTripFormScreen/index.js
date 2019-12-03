@@ -10,13 +10,14 @@ import Input from '../../components/Input';
 import ButtonAndLoader from '../../components/ButtonAndLoader';
 
 import color from '../../styles/color';
+import NeedLogin from '../../components/NeedLoginScreen';
 
 class CaravanaTripFormScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
-      isEdit: false,
+      isEdit: false
     };
   }
 
@@ -63,8 +64,13 @@ class CaravanaTripFormScreen extends React.Component {
 
   render() {
     const { isLoading } = this.state;
-    const { tripForm, setFieldTrip, saveTrip, navigation } = this.props;
+    const { tripForm, setFieldTrip, saveTrip, navigation, user } = this.props;
     const { caravana } = navigation.state.params;
+
+    if (!user) {
+      return <NeedLogin navigation={navigation}/>;
+    }
+
     return (
       <Screen>
         <KeyboardAvoidingView
@@ -122,7 +128,10 @@ class CaravanaTripFormScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return { tripForm: state.tripForm };
+  return {
+    tripForm: state.tripForm,
+    user: state.user,
+  };
 };
 
 const mapDispatchToProps = {

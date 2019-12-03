@@ -8,6 +8,7 @@ import Title from '../../components/Title';
 import CaravanaItem from '../../components/CaravanaItem';
 import Screen from '../../components/Screen';
 import Button from '../../components/Button';
+import NeedLogin from '../../components/NeedLoginScreen';
 
 class MyCaravanasScreen extends React.Component {
   componentWillMount() {
@@ -27,6 +28,12 @@ class MyCaravanasScreen extends React.Component {
 
   render() {
     const { myCaravanas, navigation } = this.props;
+
+    if (!user) {
+      return <NeedLogin navigation={navigation}/>;
+    }
+
+
     if (myCaravanas == null) {
       return (
         <View>
@@ -53,11 +60,11 @@ class MyCaravanasScreen extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  const { listMyCaravanas } = state;
+  const { listMyCaravanas, user } = state;
   const { currentUser } = firebase.auth();
 
   if (listMyCaravanas === null) {
-    return { myCaravanas: listMyCaravanas };
+    return { myCaravanas: listMyCaravanas, user };
   }
 
   const keys = Object.keys(listMyCaravanas);
@@ -65,7 +72,7 @@ const mapStateToProps = (state) => {
     return { ...listMyCaravanas[key], id: key };
   });
 
-  return { myCaravanas: listMyCaravanasWithId };
+  return { myCaravanas: listMyCaravanasWithId, user };
 };
 
 export default connect(mapStateToProps, { watchCaravanas })(MyCaravanasScreen);
