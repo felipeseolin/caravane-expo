@@ -23,7 +23,6 @@ export const saveTrip = (trip, caravana) => {
 
   return async (dispatch) => {
     if (trip.id && caravana.id) {
-      console.log('estou tentando atualizar', trip);
       // Update
       await firebase
         .database()

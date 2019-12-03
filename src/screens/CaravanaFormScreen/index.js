@@ -72,7 +72,7 @@ class CaravanaFormScreen extends React.Component {
 
     const { navigation } = this.props;
     const { caravana } = navigation.state.params;
-    console.log(caravana.passengers);
+
     return (
       <Button
         title="Visualizar passageiros"
